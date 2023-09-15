@@ -1,0 +1,5 @@
+[
+    {"Id": 1, "Name": "Frasier Crane", "Phone": "830-555-2222", "Email": "help@frasier.md"},
+    {"Id": 2, "Name": "Amber Gemstone", "Phone": "777-222-3333", "Email": "ag@gemstones.com"},
+    {"Id": 3, "Name": "Jerry Seinfeld", "Phone": "212-444-0000", "Email": "jerry@nothing.com"}
+]
