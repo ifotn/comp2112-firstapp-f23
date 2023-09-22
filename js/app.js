@@ -11,7 +11,7 @@
             $("header").html(htmlData);
         
             // once navbar loaded, attach event handlers to each link
-            $("li>a.nav-link").each(() => {
+            //$("li>a.nav-link").each(() => {
                 $("li>a").on("click", (event) => {
                     // don't fire as a normal html link
                     event.preventDefault();
@@ -20,7 +20,7 @@
                     document.title = $(event.currentTarget).prop("id");
                     LoadContent();
                 })            
-            })
+            //})
         });
     }
 
