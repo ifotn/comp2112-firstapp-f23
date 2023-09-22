@@ -9,6 +9,34 @@
         $.get("./views/shared/header.html", (htmlData) => {
             //console.log(htmlData);
             $("header").html(htmlData);
+        
+            // once navbar loaded, attach event handlers to each link
+            $("li>a.nav-link").each(() => {
+                $("li>a").on("click", (event) => {
+                    // don't fire as a normal html link
+                    event.preventDefault();
+
+                    // set the page title to the id attribute of the selected a element
+                    document.title = $(event.currentTarget).prop("id");
+                    LoadContent();
+                })            
+            })
+        });
+    }
+
+    let LoadFooter = () => {
+        $.get("./views/shared/footer.html", (htmlData) => {
+            $("footer").html(htmlData);
+        })
+    }
+
+    let LoadContent = () => {
+        let activePage = document.title;
+        $.get(`./views/${activePage}.html`, (htmlData) => {
+            $("main").html(htmlData);
+
+            // manually add the current page to the top of the history stack
+            history.pushState({}, "", `/${document.title}`);
         });
     }
 
@@ -34,6 +62,8 @@
         console.log(x);
 
         LoadHeader();
+
+        LoadFooter();
 
         // we need to rewrite this version to use a callback
         // let data = GetContacts();
