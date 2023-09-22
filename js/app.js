@@ -3,6 +3,15 @@
 // any vars live only inside the IIFE so not wasting global memory
 (function() 
 {
+    let LoadHeader = () => {
+        /* use jQuery to fetch the contents of header.html
+        use the callback structure to render these contents once js is done reading the file */
+        $.get("./views/shared/header.html", (htmlData) => {
+            //console.log(htmlData);
+            $("header").html(htmlData);
+        });
+    }
+
     let GetContacts = (callback) => {
         // use jQuery's GET method to read our json file
         // the data param represents the response of the file read operation
@@ -24,6 +33,8 @@
         console.log('First App Started');
         console.log(x);
 
+        LoadHeader();
+
         // we need to rewrite this version to use a callback
         // let data = GetContacts();
         GetContacts((data) => {
@@ -33,7 +44,9 @@
             // create & attach a list item for each row in the data
             data.forEach(contact => {
                 let listItem = document.createElement('li');
-                listItem.innerText = contact.Name;
+                let emailLinks = `<a href="mailto:${contact.Email}">${contact.Name}</a>`;
+                //listItem.innerText = contact.Name;
+                listItem.innerHTML = emailLinks;
                 list.appendChild(listItem);
             })
         })
