@@ -37,6 +37,30 @@
 
             // manually add the current page to the top of the history stack
             history.pushState({}, "", `/${document.title}`);
+
+            // read contact data from Local Storage if url is "home"
+            if (document.title == 'home') {
+                // check local storage for the api data
+                let cachedData = localStorage.getItem('apiData');
+
+                // if we find the api data in local storage
+                if (cachedData) {
+                    // convert the string back to json
+                    let data = JSON.parse(cachedData);
+                    //console.log(data);
+                    let list = document.getElementById('contactList');
+
+                    // create & attach a list item for each row in the data
+                    data.forEach(contact => {
+                        let listItem = document.createElement('li');
+                        listItem.className = "list-group-item";
+                        let emailLinks = `<a href="mailto:${contact.Email}">${contact.Name}</a>`;
+                        //listItem.innerText = contact.Name;
+                        listItem.innerHTML = emailLinks;
+                        list.appendChild(listItem);
+                    })
+                }
+            }
         });
     }
 
@@ -74,11 +98,15 @@
             // create & attach a list item for each row in the data
             data.forEach(contact => {
                 let listItem = document.createElement('li');
+                listItem.className = "list-group-item";
                 let emailLinks = `<a href="mailto:${contact.Email}">${contact.Name}</a>`;
                 //listItem.innerText = contact.Name;
                 listItem.innerHTML = emailLinks;
                 list.appendChild(listItem);
             })
+
+            // add all apiData as a single string to Local Storage
+            localStorage.setItem('apiData', JSON.stringify(data));
         })
     }
 
