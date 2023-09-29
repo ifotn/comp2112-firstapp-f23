@@ -52,6 +52,13 @@
                 }
             }
         });
+
+        // read session counter var from session storage & display current value
+        let counter = sessionStorage.getItem('sessionCounter') ?? 0;
+
+        if (counter) {
+            document.getElementById('sessionCounter').innerHTML = counter;
+        }
     }
 
     let GetContacts = (callback) => {
@@ -125,5 +132,13 @@ let updateCounterWithClosure = (() =>{
     return () => {
         counter++;
         document.getElementById('clickCount').innerHTML = counter;
+
+        // get current session count, increment it, resave and display in footer
+        let sessionCounter = sessionStorage.getItem('sessionCounter') ?? 0;
+        sessionCounter++;
+
+        // store the current counter var in session storage
+        sessionStorage.setItem('sessionCounter', sessionCounter);
+        document.getElementById('sessionCounter').innerHTML = sessionCounter;
     }
 })();
