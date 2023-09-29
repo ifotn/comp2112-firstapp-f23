@@ -48,17 +48,7 @@
                     // convert the string back to json
                     let data = JSON.parse(cachedData);
                     //console.log(data);
-                    let list = document.getElementById('contactList');
-
-                    // create & attach a list item for each row in the data
-                    data.forEach(contact => {
-                        let listItem = document.createElement('li');
-                        listItem.className = "list-group-item";
-                        let emailLinks = `<a href="mailto:${contact.Email}">${contact.Name}</a>`;
-                        //listItem.innerText = contact.Name;
-                        listItem.innerHTML = emailLinks;
-                        list.appendChild(listItem);
-                    })
+                    DisplayContacts(data);
                 }
             }
         });
@@ -92,18 +82,8 @@
         // we need to rewrite this version to use a callback
         // let data = GetContacts();
         GetContacts((data) => {
-            let list = document.getElementById('contactList');
-
-            //console.log(data);
-            // create & attach a list item for each row in the data
-            data.forEach(contact => {
-                let listItem = document.createElement('li');
-                listItem.className = "list-group-item";
-                let emailLinks = `<a href="mailto:${contact.Email}">${contact.Name}</a>`;
-                //listItem.innerText = contact.Name;
-                listItem.innerHTML = emailLinks;
-                list.appendChild(listItem);
-            })
+            // call the function to display the contacts from this data
+            DisplayContacts(data);
 
             // add all apiData as a single string to Local Storage
             localStorage.setItem('apiData', JSON.stringify(data));
@@ -114,6 +94,22 @@
     window.addEventListener('load', Start);
     //console.log(x);
 })();
+
+// display contact data (from json file or local storage) in an unordered list
+let DisplayContacts = (data) => {
+    let list = document.getElementById('contactList');
+
+    //console.log(data);
+    // create & attach a list item for each row in the data
+    data.forEach(contact => {
+        let listItem = document.createElement('li');
+        listItem.className = "list-group-item";
+        let emailLinks = `<a href="mailto:${contact.Email}">${contact.Name}</a>`;
+        //listItem.innerText = contact.Name;
+        listItem.innerHTML = emailLinks;
+        list.appendChild(listItem);
+    })
+}
 
 // update counter without using Closure structure
 let updateCounterWithoutClosure = () => {
